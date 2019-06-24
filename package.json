@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "对wisers文档内容进行格式化解析",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/YaoKaiPeng/parse-wisers.git"
+	},
   "keywords": [
     "parse-wisers"
   ],
