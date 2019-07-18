@@ -54,7 +54,7 @@ module.exports = function(html) {
         .html()
         .trim()
         .split(/<br>/)
-      const url = content.find('tr p a').attr('href')
+      const url = content.find('td a').attr('href')
       data = { _from, _in, _by, url, date }
     }
     return {

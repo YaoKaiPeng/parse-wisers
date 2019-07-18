@@ -1,19 +1,29 @@
 {
   "name": "parse-wisers",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "对wisers文档内容进行格式化解析",
   "main": "index.js",
   "repository": {
-		"type": "git",
-		"url": "https://github.com/YaoKaiPeng/parse-wisers.git"
-	},
+    "type": "git",
+    "url": "https://github.com/YaoKaiPeng/parse-wisers.git"
+  },
   "keywords": [
     "parse-wisers"
   ],
+  "scripts": {
+    "babel": "babel src -d dist --copy-files"
+  },
   "author": "kai",
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6"
   }
 }

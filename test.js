@@ -490,5 +490,5 @@ function die(message) {
   process.exit()
 }
 
-var result = parseWisers({ text: docText, type: 'DOC' })
+var result = parseWisers({ text: htmlText, type: 'HTML' })
 console.log(result)
