@@ -1,6 +1,6 @@
 {
   "name": "parse-wisers",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "对wisers文档内容进行格式化解析",
   "main": "index.js",
   "repository": {

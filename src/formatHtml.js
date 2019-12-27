@@ -28,7 +28,7 @@ module.exports = function(html) {
       .replace(/tr>|td>/g, "div>")
       .replace(/<font class="highlight".+?font>/g, "");
     let data = {};
-    if (html.includes("DOCUMENT ID:")) {
+    if (!html.includes("文章总数")) {
       // 海外版数据
       const [fromInfos, , byInfos] = infos
         .text()
@@ -42,16 +42,14 @@ module.exports = function(html) {
       data = { _from, _in, _by, url, date };
     } else {
       // 国内版数据
-      const infoText = infos.find("td").text();
-      const [formText, inText, byText] = infoText.split(/\n/);
-      const byArray = byText.split(/ \|/);
-      const _by = byArray[byArray.length - 1];
-      const textArray = formText.split(" | ");
-      const _date = textArray[textArray.length - 1];
-      const [, _from] = textArray[0].split(".");
-      const [_in] = inText.split(" | ");
+      const dateByDom = infos.find("td:nth-child(3) font");
+      const [by, date] = dateByDom.html().split(/<br>/);
+      const inDom = infos.find("td:nth-child(1) font");
+      const [_in] = inDom.html().split(/<br>/);
+      const fromDom = infos.find("td:nth-child(2) font");
+      const [, from] = fromDom.text().split(/ \. /);
       const url = content.find("td a").attr("href");
-      data = { _from, _in, _by, url, date: _date };
+      data = { _from: from.trim(), _in, _by: by, url, date };
     }
     return {
       from: data._from,
