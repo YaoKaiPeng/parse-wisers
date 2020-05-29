@@ -27,7 +27,5 @@ module.exports = function(html) {
       content: _content.join("")
     };
   });
-  die(results);
-  // console.log(results);
   return results;
 };
