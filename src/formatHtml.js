@@ -4,7 +4,11 @@ const cheerio = require("cheerio");
 module.exports = function(html) {
   const $ = cheerio.load(html, { decodeEntities: false });
   let result = [];
-  const ids = $('Table[width="100%"][style="table-layout:fixed;"] tr')
+  const [listHtml] = html
+    .replace(/\n/g, "")
+    .match(/(?<=<a name="TOC"><\/a>).*?(?=<a name=")/);
+  const listDom = cheerio.load(listHtml, { decodeEntities: false });
+  const ids = listDom("Table tr")
     .map((i, el) => {
       const href = $(el)
         .find("td a")
@@ -43,13 +47,33 @@ module.exports = function(html) {
     } else {
       // 国内版数据
       const dateByDom = infos.find("td:nth-child(3) font");
-      const [by, date] = dateByDom.html().split(/<br>/);
-      const inDom = infos.find("td:nth-child(1) font");
-      const [_in] = inDom.html().split(/<br>/);
-      const fromDom = infos.find("td:nth-child(2) font");
-      const [, from] = fromDom.text().split(/ \. /);
+      let by, date, from, _in;
+      if (dateByDom.html()) {
+        const [_by, _date] = dateByDom.html().split(/<br>/);
+        const inDom = infos.find("td:nth-child(1) font");
+        const [__in] = inDom.html().split(/<br>/);
+        const fromDom = infos.find("td:nth-child(2) font");
+        const [, _from] = fromDom.text().split(/ \. /);
+        _in = __in;
+        from = _from.trim();
+        by = _by;
+        date = _date;
+      } else {
+        const [fromInfos, byInfos] = infos
+          .text()
+          .trim()
+          .split(/\n/);
+        const fromArray = fromInfos.trim().split(/ \| | \./);
+        const [, _from] = fromArray;
+        const _date = fromArray.pop();
+        const [__in, _by] = byInfos.trim().split(/\| By /);
+        _in = __in;
+        from = _from;
+        by = _by;
+        date = _date;
+      }
       const url = content.find("td a").attr("href");
-      data = { _from: from.trim(), _in, _by: by, url, date };
+      data = { _from: from, _in, _by: by, url, date };
     }
     return {
       from: data._from,
@@ -63,6 +87,7 @@ module.exports = function(html) {
       content: _content
     };
   });
+  die(result);
   return result;
 };
 
