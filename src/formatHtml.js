@@ -87,7 +87,6 @@ module.exports = function(html) {
       content: _content
     };
   });
-  die(result);
   return result;
 };
 
