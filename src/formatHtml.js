@@ -23,12 +23,12 @@ module.exports = function (html) {
     const _title = title
       .find('tr font[size="5"]')
       .html()
-      .replace(/<font class="highlight".+?font>/g, '')
+      .replace(/class="highlight"/g, '')
     const _content = content
       .find('tbody')
       .html()
       .replace(/tr>|td>/g, 'div>')
-      .replace(/<font class="highlight".+?font>/g, '')
+      .replace(/class="highlight"/g, '')
     let data = {}
     if (!html.includes('文章总数')) {
       // 海外版数据
